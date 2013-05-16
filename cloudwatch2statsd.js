@@ -9,21 +9,34 @@ var cw = new CloudWatch({
     'region'          : amazon.US_WEST_2
 });
 
-var startTime = new Date(new Date().getTime() - (1000*60*60));
-var endTime = new Date();
-cw.GetMetricStatistics({
-  MetricName: 'HealthyHostCount',
-  Namespace: 'AWS/ELB',
-  Unit: ['Count'],
-  Period: 60,
-  Statistics: ['Average'],
-  Dimensions: [{ Name: 'AvailabilityZone', Value: 'us-west-2b' }, { Name: 'LoadBalancerName', Value: 'w-login-anosrep-org-0502' }],
-  StartTime: startTime.toISOString('8601'),
-  EndTime: endTime.toISOString('8601')
-}, function(err, data) {
-  // if (err) console.log(JSON.stringify(err, null, "  "));
-  console.log(err, JSON.stringify(data, null, "  "));
-});
+function getHealthyHostCount(az, elb) {
+  var startTime = new Date(new Date().getTime() - (24*1000*60*60));
+  var endTime = new Date(new Date().getTime() - (1000*60));
+  var az = az || 'us-west-2b';
+  var elb = elb || 'w-anosrep-org-0514';
+
+  cw.GetMetricStatistics({
+    MetricName: 'HealthyHostCount',
+    Namespace: 'AWS/ELB',
+    Unit: ['Count'],
+    Period: 60,
+    Statistics: ['Sum'],
+    Dimensions: [
+      { Name: 'AvailabilityZone', Value: az },
+      { Name: 'LoadBalancerName', Value: elb }
+    ],
+    StartTime: startTime.toISOString('8601'),
+    EndTime: endTime.toISOString('8601')
+  }, function(err, data) {
+    // if (err) console.log(JSON.stringify(err, null, "  "));
+    console.log(err, JSON.stringify(data, null, "  "));
+  });
+}
+
+getHealthyHostCount('us-west-2a')
+getHealthyHostCount('us-west-2b')
+getHealthyHostCount('us-west-2c')
+
 
 /*
 elb.find(cw, /^.*0502$/, function(err, elbs) {
