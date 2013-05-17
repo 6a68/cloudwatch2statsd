@@ -115,31 +115,3 @@ module.exports = {
   getHTTPCode_Backend_5XX: getHTTPCode_Backend_5XX,
   getHTTPCode_Backend_2XX: getHTTPCode_Backend_2XX
 };
-  
-
-// getHealthyHostCount('us-west-2a')
-//getHealthyHostCount('us-west-2b')
-//getHealthyHostCount('us-west-2c')
-
-//getHTTPCode_Backend_4XX('us-west-2a')
-//getHTTPCode_Backend_4XX('us-west-2b')
-//getHTTPCode_Backend_4XX('us-west-2c')
-
-//getHTTPCode_Backend_5XX('us-west-2a')
-//getHTTPCode_Backend_5XX('us-west-2b')
-//getHTTPCode_Backend_5XX('us-west-2c')
-
-getHTTPCode_Backend_2XX('us-west-2a')
-//getHTTPCode_Backend_2XX('us-west-2b')
-//getHTTPCode_Backend_2XX('us-west-2c')
-
-/*
-elb.find(cw, /^.*0502$/, function(err, elbs) {
-  if (err) console.error("fatal error:", err);
-  elbs.forEach(function(x) {
-    elb.stats(cw, x, function(err, data) {
-      console.log(err, JSON.stringify(data, null, "  "));
-    });
-  });
-});
-*/
